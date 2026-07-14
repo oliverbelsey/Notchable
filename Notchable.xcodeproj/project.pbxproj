@@ -6,13 +6,46 @@
 	objectVersion = 110;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		9265FA553003C107002A5A23 /* mediaremote-adapter.pl in Resources */ = {isa = PBXBuildFile; fileRef = 9265FA543003C107002A5A23 /* mediaremote-adapter.pl */; };
+		9283D61E30068ECD00A18145 /* MediaRemoteAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9283D61C30068EB600A18145 /* MediaRemoteAdapter.framework */; };
+		9283D61F30068ECD00A18145 /* MediaRemoteAdapter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9283D61C30068EB600A18145 /* MediaRemoteAdapter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9283D61B30068D4B00A18145 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			dstPath = "";
+			dstSubfolder = Frameworks;
+			files = (
+				9283D61F30068ECD00A18145 /* MediaRemoteAdapter.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		92311A8C2FEF467700975ADA /* Notchable.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Notchable.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9265FA543003C107002A5A23 /* mediaremote-adapter.pl */ = {isa = PBXFileReference; lastKnownFileType = text.script.perl; path = "mediaremote-adapter.pl"; sourceTree = "<group>"; };
+		9283D61C30068EB600A18145 /* MediaRemoteAdapter.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = MediaRemoteAdapter.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
+
+/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
+		9278D3D32FF933030083388E /* Exceptions for "Notchable" folder in "Notchable" target */ = {
+			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
+			membershipExceptions = (
+				Info.plist,
+			);
+			target = 92311A8B2FEF467700975ADA /* Notchable */;
+		};
+/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		92311A8E2FEF467700975ADA /* Notchable */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
+			exceptions = (
+				9278D3D32FF933030083388E /* Exceptions for "Notchable" folder in "Notchable" target */,
+			);
 			path = Notchable;
 			sourceTree = "<group>";
 		};
@@ -22,6 +55,7 @@
 		92311A892FEF467700975ADA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				9283D61E30068ECD00A18145 /* MediaRemoteAdapter.framework in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -32,6 +66,8 @@
 			children = (
 				92311A8E2FEF467700975ADA /* Notchable */,
 				92311A8D2FEF467700975ADA /* Products */,
+				9265FA543003C107002A5A23 /* mediaremote-adapter.pl */,
+				9283D61C30068EB600A18145 /* MediaRemoteAdapter.framework */,
 			);
 			sourceTree = "<group>";
 		};
@@ -53,6 +89,7 @@
 				92311A882FEF467700975ADA /* Sources */,
 				92311A892FEF467700975ADA /* Frameworks */,
 				92311A8A2FEF467700975ADA /* Resources */,
+				9283D61B30068D4B00A18145 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -88,6 +125,8 @@
 			);
 			mainGroup = 92311A832FEF467700975ADA;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 92311A8D2FEF467700975ADA /* Products */;
 			projectDirPath = "";
@@ -102,6 +141,7 @@
 		92311A8A2FEF467700975ADA /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			files = (
+				9265FA553003C107002A5A23 /* mediaremote-adapter.pl in Resources */,
 			);
 		};
 /* End PBXResourcesBuildPhase section */
@@ -240,6 +280,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -248,7 +289,12 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Notchable/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -272,6 +318,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -280,7 +327,12 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				ENABLE_USER_SELECTED_FILES = readonly;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+				);
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = Notchable/Info.plist;
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
