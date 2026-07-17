@@ -7,12 +7,12 @@
 
 import SwiftUI
 
-let musicData = MusicData()
+let mediaData = MediaData()
 
 var NowPlayingNotch = DynamicNotch() {
-    NowPlayingNotchExpandedView(musicData: musicData)
+    NowPlayingNotchExpandedView(mediaData: mediaData)
 } compactLeading: {
-    NowPlayingNotchCompactLeadingView(musicData: musicData)
+    NowPlayingNotchCompactLeadingView(mediaData: mediaData)
 } compactTrailing: {
-    NowPlayingNotchCompactTrailingView(musicData: musicData)
+    NowPlayingNotchCompactTrailingView(mediaData: mediaData)
 }

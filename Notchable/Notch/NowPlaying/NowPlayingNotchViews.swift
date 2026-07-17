@@ -8,7 +8,7 @@
 import SwiftUI
     
 struct NowPlayingNotchExpandedView: View {
-    var musicData: MusicData
+    var mediaData: MediaData
     var body: some View {
         VStack {
             HStack {
@@ -17,18 +17,18 @@ struct NowPlayingNotchExpandedView: View {
                     .frame(width: 60, height: 60)
                     .clipShape(.rect(cornerRadius: 12))
                 VStack {
-                    Text(musicData.title ?? "")
+                    Text(mediaData.title ?? "")
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Text(musicData.artist ?? "")
+                    Text(mediaData.artist ?? "")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundStyle(.secondary)
                 }
             }
-            switch musicData.playing {
+            switch mediaData.playing {
             case true:
                 HStack {
-                    Text(.currentDate, format: .timer(countingUpIn: (musicData.timestamp?.addingTimeInterval(-(musicData.elapsedTime ?? 0)) ?? Date.now)..<(musicData.timestamp ?? Date.now) .addingTimeInterval(musicData.duration ?? 0)))
+                    Text(.currentDate, format: .timer(countingUpIn: (mediaData.timestamp?.addingTimeInterval(-(mediaData.elapsedTime ?? 0)) ?? Date.now)..<(mediaData.timestamp ?? Date.now) .addingTimeInterval(mediaData.duration ?? 0)))
                         .foregroundStyle(.secondary)
                     ZStack {
                         Capsule()
@@ -42,13 +42,13 @@ struct NowPlayingNotchExpandedView: View {
                     HStack(spacing: 0) {
                         Text("-")
                             .foregroundStyle(.secondary)
-                        Text(.currentDate, format: .timer(countingDownIn: (musicData.timestamp ?? Date.now)..<(musicData.timestamp?.addingTimeInterval(-(musicData.elapsedTime ?? 0)) ?? Date.now) .addingTimeInterval(musicData.duration ?? 0)))
+                        Text(.currentDate, format: .timer(countingDownIn: (mediaData.timestamp ?? Date.now)..<(mediaData.timestamp?.addingTimeInterval(-(mediaData.elapsedTime ?? 0)) ?? Date.now) .addingTimeInterval(mediaData.duration ?? 0)))
                             .foregroundStyle(.secondary)
                     }
                 }
             default:
                 HStack {
-                    Text(musicData.elapsedTime?.minuteSecondFormat() ?? "0:00")
+                    Text(mediaData.elapsedTime?.minuteSecondFormat() ?? "0:00")
                         .foregroundStyle(.secondary)
                     ZStack {
                         Capsule()
@@ -59,7 +59,7 @@ struct NowPlayingNotchExpandedView: View {
                             .clipShape(.capsule)
                             .foregroundStyle(.secondary)
                     }
-                    Text("-" + (musicData.duration ?? 0 - (musicData.elapsedTime ?? 0)).minuteSecondFormat())
+                    Text("-" + (mediaData.duration ?? 0 - (mediaData.elapsedTime ?? 0)).minuteSecondFormat())
                         .foregroundStyle(.secondary)
                 }
             }
@@ -82,7 +82,7 @@ struct NowPlayingNotchExpandedView: View {
                 .labelStyle(.iconOnly)
                 
                 Spacer()
-                switch musicData.playing {
+                switch mediaData.playing {
                 case true:
                     Button("Pause", systemImage: "pause.fill") {
                         sendMediaCommand(.playPause)
@@ -128,7 +128,7 @@ struct NowPlayingNotchExpandedView: View {
 }
 
 struct NowPlayingNotchCompactLeadingView: View {
-    var musicData: MusicData
+    var mediaData: MediaData
     var body: some View {
         HStack {
             Image(.sour)
@@ -137,10 +137,10 @@ struct NowPlayingNotchCompactLeadingView: View {
 }
 
 struct NowPlayingNotchCompactTrailingView: View {
-    var musicData: MusicData
+    var mediaData: MediaData
     var body: some View {
         HStack {
-            Text(musicData.title ?? "")
+            Text(mediaData.title ?? "")
         }
     }
 }

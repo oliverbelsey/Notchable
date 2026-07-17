@@ -162,7 +162,7 @@ class MediaStreamer {
     }
 }
 
-@Observable class MusicData {
+@Observable class MediaData {
     var title: String?
     var artist: String?
     var timestamp: Date?
