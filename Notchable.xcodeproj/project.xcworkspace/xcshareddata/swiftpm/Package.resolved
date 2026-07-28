@@ -1,0 +1,15 @@
+{
+  "originHash" : "05dcbab00071cc8894f6ad09b2182c02154d281e44e363b57e838064cc089839",
+  "pins" : [
+    {
+      "identity" : "dynamicnotchkit",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/oliverbelsey/DynamicNotchKit",
+      "state" : {
+        "revision" : "cd0b3e52d537db115ad3a9d89601f20e0bee8d27",
+        "version" : "1.1.0"
+      }
+    }
+  ],
+  "version" : 3
+}

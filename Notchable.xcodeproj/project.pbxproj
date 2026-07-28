@@ -10,6 +10,7 @@
 		9265FA553003C107002A5A23 /* mediaremote-adapter.pl in Resources */ = {isa = PBXBuildFile; fileRef = 9265FA543003C107002A5A23 /* mediaremote-adapter.pl */; };
 		9283D61E30068ECD00A18145 /* MediaRemoteAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9283D61C30068EB600A18145 /* MediaRemoteAdapter.framework */; };
 		9283D61F30068ECD00A18145 /* MediaRemoteAdapter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9283D61C30068EB600A18145 /* MediaRemoteAdapter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		92D670493018EE1E00528FE6 /* DynamicNotchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 92D670483018EE1E00528FE6 /* DynamicNotchKit */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -55,6 +56,7 @@
 		92311A892FEF467700975ADA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				92D670493018EE1E00528FE6 /* DynamicNotchKit in Frameworks */,
 				9283D61E30068ECD00A18145 /* MediaRemoteAdapter.framework in Frameworks */,
 			);
 		};
@@ -97,6 +99,9 @@
 				92311A8E2FEF467700975ADA /* Notchable */,
 			);
 			name = Notchable;
+			packageProductDependencies = (
+				92D670483018EE1E00528FE6 /* DynamicNotchKit */,
+			);
 			productName = Notchable;
 			productReference = 92311A8C2FEF467700975ADA /* Notchable.app */;
 			productType = "com.apple.product-type.application";
@@ -126,6 +131,7 @@
 			mainGroup = 92311A832FEF467700975ADA;
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
+				92D670473018EE1E00528FE6 /* XCRemoteSwiftPackageReference "DynamicNotchKit" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 92311A8D2FEF467700975ADA /* Products */;
@@ -371,6 +377,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		92D670473018EE1E00528FE6 /* XCRemoteSwiftPackageReference "DynamicNotchKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/oliverbelsey/DynamicNotchKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.1.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		92D670483018EE1E00528FE6 /* DynamicNotchKit */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 92D670473018EE1E00528FE6 /* XCRemoteSwiftPackageReference "DynamicNotchKit" */;
+			productName = DynamicNotchKit;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 92311A842FEF467700975ADA /* Project object */;
 	validationLevel = 1;
