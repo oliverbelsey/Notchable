@@ -1,0 +1,108 @@
+# ---------------------------------
+# macOS
+# ---------------------------------
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.Spotlight-V100
+.Trashes
+.fseventsd
+.DocumentRevisions-V100
+.TemporaryItems
+Icon?
+
+# ---------------------------------
+# Xcode: build output
+# ---------------------------------
+build/
+DerivedData/
+*.xcarchive
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+# ---------------------------------
+# Xcode: user-specific state
+# ---------------------------------
+xcuserdata/
+*.xcuserstate
+*.xcscmblueprint
+*.xccheckout
+*.moved-aside
+*.hmap
+*.pbxuser
+*.mode1v3
+*.mode2v3
+*.perspectivev3
+!default.pbxuser
+!default.mode1v3
+!default.mode2v3
+!default.perspectivev3
+
+# Xcode workspace settings that are per-user
+*.xcworkspace/xcuserdata/
+*.xcodeproj/xcuserdata/
+*.xcodeproj/project.xcworkspace/xcuserdata/
+
+# Timeline / playground leftovers
+timeline.xctimeline
+playground.xcworkspace
+
+# ---------------------------------
+# Swift Package Manager
+# ---------------------------------
+.build/
+.swiftpm/
+# Uncomment if you are building a library and don't want to pin versions:
+# Package.resolved
+
+# ---------------------------------
+# CocoaPods (if used)
+# ---------------------------------
+Pods/
+# Uncomment to ignore the lockfile too (most teams commit it):
+# Podfile.lock
+
+# ---------------------------------
+# Carthage (if used)
+# ---------------------------------
+Carthage/Build/
+Carthage/Checkouts
+
+# ---------------------------------
+# Fastlane (if used)
+# ---------------------------------
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots/**/*.png
+fastlane/test_output
+
+# ---------------------------------
+# Testing / coverage
+# ---------------------------------
+*.xcresult
+*.gcno
+*.gcda
+*.profraw
+
+# ---------------------------------
+# Secrets & local config
+# ---------------------------------
+.env
+.env.*
+Secrets.xcconfig
+*.p12
+*.cer
+*.mobileprovision
+*.provisionprofile
+GoogleService-Info.plist
+
+# ---------------------------------
+# Editors / misc
+# ---------------------------------
+.idea/
+.vscode/
+*.swp
+*~
+*.log
