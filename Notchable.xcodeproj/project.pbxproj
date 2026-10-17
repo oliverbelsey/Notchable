@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		9246D0843082E306002C772D /* DynamicNotchKit in Frameworks */ = {isa = PBXBuildFile; productRef = 9246D0833082E306002C772D /* DynamicNotchKit */; };
 		9265FA553003C107002A5A23 /* mediaremote-adapter.pl in Resources */ = {isa = PBXBuildFile; fileRef = 9265FA543003C107002A5A23 /* mediaremote-adapter.pl */; };
+		9277402E30839B8F00AB4701 /* Defaults in Frameworks */ = {isa = PBXBuildFile; productRef = 9277402D30839B8F00AB4701 /* Defaults */; };
+		9277403030839B8F00AB4701 /* DefaultsMacros in Frameworks */ = {isa = PBXBuildFile; productRef = 9277402F30839B8F00AB4701 /* DefaultsMacros */; };
 		9283D61E30068ECD00A18145 /* MediaRemoteAdapter.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9283D61C30068EB600A18145 /* MediaRemoteAdapter.framework */; };
 		9283D61F30068ECD00A18145 /* MediaRemoteAdapter.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 9283D61C30068EB600A18145 /* MediaRemoteAdapter.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
@@ -56,8 +58,10 @@
 		92311A892FEF467700975ADA /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			files = (
+				9277402E30839B8F00AB4701 /* Defaults in Frameworks */,
 				9246D0843082E306002C772D /* DynamicNotchKit in Frameworks */,
 				9283D61E30068ECD00A18145 /* MediaRemoteAdapter.framework in Frameworks */,
+				9277403030839B8F00AB4701 /* DefaultsMacros in Frameworks */,
 			);
 		};
 /* End PBXFrameworksBuildPhase section */
@@ -101,6 +105,8 @@
 			name = Notchable;
 			packageProductDependencies = (
 				9246D0833082E306002C772D /* DynamicNotchKit */,
+				9277402D30839B8F00AB4701 /* Defaults */,
+				9277402F30839B8F00AB4701 /* DefaultsMacros */,
 			);
 			productName = Notchable;
 			productReference = 92311A8C2FEF467700975ADA /* Notchable.app */;
@@ -132,6 +138,7 @@
 			minimizedProjectReferenceProxies = 1;
 			packageReferences = (
 				9246D0823082E306002C772D /* XCRemoteSwiftPackageReference "DynamicNotchKit" */,
+				9277402C30839B8F00AB4701 /* XCRemoteSwiftPackageReference "Defaults" */,
 			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 92311A8D2FEF467700975ADA /* Products */;
@@ -387,6 +394,14 @@
 				minimumVersion = 1.2.0;
 			};
 		};
+		9277402C30839B8F00AB4701 /* XCRemoteSwiftPackageReference "Defaults" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/sindresorhus/Defaults";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 9.0.9;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -394,6 +409,16 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 9246D0823082E306002C772D /* XCRemoteSwiftPackageReference "DynamicNotchKit" */;
 			productName = DynamicNotchKit;
+		};
+		9277402D30839B8F00AB4701 /* Defaults */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9277402C30839B8F00AB4701 /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = Defaults;
+		};
+		9277402F30839B8F00AB4701 /* DefaultsMacros */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 9277402C30839B8F00AB4701 /* XCRemoteSwiftPackageReference "Defaults" */;
+			productName = DefaultsMacros;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
