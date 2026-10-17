@@ -1,5 +1,5 @@
 //
-//  NowPlayingNotch.swift
+//  NowPlayingNotchViews.swift
 //  Notchable
 //
 //  Created by Oliver Belsey on 27/06/2026.
@@ -28,7 +28,7 @@ struct NowPlayingNotchExpandedView: View {
             switch musicData.playing {
             case true:
                 HStack {
-                    Text(.currentDate, format: .timer(countingUpIn: (musicData.timestamp?.addingTimeInterval(-(musicData.elapsedTime ?? 0)) ?? Date.now)..<(musicData.timestamp ?? Date.now) .addingTimeInterval(musicData.duration ?? 0)))
+                    Text(.currentDate, format: .timer(countingUpIn: (musicData.timestamp?.addingTimeInterval(-(musicData.elapsedTime ?? 0)) ?? Date.now) ..< (musicData.timestamp ?? Date.now).addingTimeInterval(musicData.duration ?? 0)))
                         .foregroundStyle(.secondary)
                     ZStack {
                         Capsule()
@@ -42,7 +42,7 @@ struct NowPlayingNotchExpandedView: View {
                     HStack(spacing: 0) {
                         Text("-")
                             .foregroundStyle(.secondary)
-                        Text(.currentDate, format: .timer(countingDownIn: (musicData.timestamp ?? Date.now)..<(musicData.timestamp?.addingTimeInterval(-(musicData.elapsedTime ?? 0)) ?? Date.now) .addingTimeInterval(musicData.duration ?? 0)))
+                        Text(.currentDate, format: .timer(countingDownIn: (musicData.timestamp ?? Date.now) ..< (musicData.timestamp?.addingTimeInterval(-(musicData.elapsedTime ?? 0)) ?? Date.now).addingTimeInterval(musicData.duration ?? 0)))
                             .foregroundStyle(.secondary)
                     }
                 }
@@ -65,12 +65,10 @@ struct NowPlayingNotchExpandedView: View {
             }
             HStack {
                 Spacer()
-                Button("Favourite", systemImage: "star.fill") {
-                    
-                }
-                .font(.title)
-                .buttonStyle(.borderless)
-                .labelStyle(.iconOnly)
+                Button("Favourite", systemImage: "star.fill") {}
+                    .font(.title)
+                    .buttonStyle(.borderless)
+                    .labelStyle(.iconOnly)
                 
                 Spacer()
                 
@@ -110,13 +108,10 @@ struct NowPlayingNotchExpandedView: View {
                 
                 Spacer()
                 
-                Button("Airplay", systemImage: "airpods.pro") {
-                    
-                }
-                .font(.title)
-                .buttonStyle(.borderless)
-                .labelStyle(.iconOnly)
-                
+                Button("Airplay", systemImage: "airpods.pro") {}
+                    .font(.title)
+                    .buttonStyle(.borderless)
+                    .labelStyle(.iconOnly)
                 
                 Spacer()
             }
@@ -144,7 +139,6 @@ struct NowPlayingNotchCompactTrailingView: View {
         }
     }
 }
-
 
 #Preview {
     NowPlayingNotchExpandedView(musicData: musicData)

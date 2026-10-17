@@ -1,5 +1,5 @@
 //
-//  Extensions.swift
+//  TimeInterval.swift
 //  Notchable
 //
 //  Created by Oliver Belsey on 13/07/2026.

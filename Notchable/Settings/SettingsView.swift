@@ -21,7 +21,7 @@ struct SettingsView: View {
         .tabViewCustomization(nil)
     }
 }
- 
+
 #Preview {
     SettingsView()
 }

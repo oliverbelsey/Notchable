@@ -1,5 +1,5 @@
 //
-//  GeneralSettings.swift
+//  GeneralSettingsView.swift
 //  Notchable
 //
 //  Created by Oliver Belsey on 14/07/2026.
@@ -16,7 +16,6 @@ struct GeneralSettingsView: View {
                 Text("Test description")
             }
             .toggleStyle(.switch)
-            
         }
     }
 }

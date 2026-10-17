@@ -86,7 +86,7 @@ class MediaStreamer {
         process.standardOutput = pipe
         
         self.process = process
-        self.outputPipe = pipe
+        outputPipe = pipe
         
         let fileHandle = pipe.fileHandleForReading
         fileHandle.waitForDataInBackgroundAndNotify()
@@ -109,7 +109,7 @@ class MediaStreamer {
     @objc private func handleDataAvailable(_ notification: Notification) {
         guard
             let fileHandle = notification.object as? FileHandle else { return }
-            let data = fileHandle.availableData
+        let data = fileHandle.availableData
         
         if data.isEmpty {
             print("Stream ended")
@@ -130,7 +130,7 @@ class MediaStreamer {
         
         if let outputString = String(data: data, encoding: .utf8) {
             let lines = outputString.components(separatedBy: .newlines)
-            for line in lines  {
+            for line in lines {
                 if !line.isEmpty {
                     parseJSONLine(line)
                 }

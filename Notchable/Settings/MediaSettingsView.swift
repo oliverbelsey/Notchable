@@ -5,15 +5,13 @@
 //  Created by Oliver Belsey on 14/07/2026.
 //
 
-import SwiftUI
 import DynamicNotchKit
+import SwiftUI
 
 struct MediaSettingsView: View {
     var body: some View {
         List {
-            Button("Start") {
-                
-            }
+            Button("Start") {}
             Button("Play Pause") {
                 sendMediaCommand(.playPause)
             }
