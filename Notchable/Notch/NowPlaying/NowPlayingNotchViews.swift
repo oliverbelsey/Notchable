@@ -147,5 +147,5 @@ struct NowPlayingNotchCompactTrailingView: View {
 
 
 #Preview {
-    NowPlayingNotch.expandedContent
+    NowPlayingNotchExpandedView(musicData: musicData)
 }

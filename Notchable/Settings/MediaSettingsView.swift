@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import DynamicNotchKit
 
 struct MediaSettingsView: View {
     var body: some View {
@@ -23,7 +24,7 @@ struct MediaSettingsView: View {
                 sendMediaCommand(.pause)
             }
             Section {
-                NowPlayingNotch.expandedContent
+                NowPlayingNotchExpandedView(musicData: musicData)
             }
             Section {
                 Button("expand") {
