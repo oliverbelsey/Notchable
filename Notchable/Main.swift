@@ -10,6 +10,7 @@ import SwiftUI
 @main
 struct NotchableApp: App {
     @Environment(\.openWindow) var openWindow
+    @State private var mediaController = MediaController()
 
     var body: some Scene {
         MenuBarExtra("Notchable", systemImage: "inset.filled.topthird.rectangle") {

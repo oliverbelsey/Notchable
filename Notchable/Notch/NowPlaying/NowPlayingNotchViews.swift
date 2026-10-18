@@ -8,7 +8,7 @@
 import SwiftUI
     
 struct NowPlayingNotchExpandedView: View {
-    var musicData: MusicData
+    private var mediaController = MediaController.controller
     var body: some View {
         VStack {
             HStack {
@@ -17,18 +17,18 @@ struct NowPlayingNotchExpandedView: View {
                     .frame(width: 60, height: 60)
                     .clipShape(.rect(cornerRadius: 12))
                 VStack {
-                    Text(musicData.title ?? "")
+                    Text(mediaController?.musicData.title ?? "")
                         .bold()
                         .frame(maxWidth: .infinity, alignment: .leading)
-                    Text(musicData.artist ?? "")
+                    Text(mediaController?.musicData.artist ?? "")
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .foregroundStyle(.secondary)
                 }
             }
-            switch musicData.playing {
+            switch mediaController?.musicData.playing {
             case true:
                 HStack {
-                    Text(.currentDate, format: .timer(countingUpIn: (musicData.timestamp?.addingTimeInterval(-(musicData.elapsedTime ?? 0)) ?? Date.now) ..< (musicData.timestamp ?? Date.now).addingTimeInterval(musicData.duration ?? 0)))
+                    Text(.currentDate, format: .timer(countingUpIn: (mediaController?.musicData.timestamp.addingTimeInterval(-(mediaController?.musicData.elapsedTime ?? 0)) ?? Date.now) ..< (mediaController?.musicData.timestamp ?? Date.now).addingTimeInterval(mediaController?.musicData.duration ?? 0)))
                         .foregroundStyle(.secondary)
                     ZStack {
                         Capsule()
@@ -42,13 +42,13 @@ struct NowPlayingNotchExpandedView: View {
                     HStack(spacing: 0) {
                         Text("-")
                             .foregroundStyle(.secondary)
-                        Text(.currentDate, format: .timer(countingDownIn: (musicData.timestamp ?? Date.now) ..< (musicData.timestamp?.addingTimeInterval(-(musicData.elapsedTime ?? 0)) ?? Date.now).addingTimeInterval(musicData.duration ?? 0)))
+                        Text(.currentDate, format: .timer(countingDownIn: (mediaController?.musicData.timestamp ?? Date.now) ..< (mediaController?.musicData.timestamp.addingTimeInterval(-(mediaController?.musicData.elapsedTime ?? 0)) ?? Date.now).addingTimeInterval(mediaController?.musicData.duration ?? 0)))
                             .foregroundStyle(.secondary)
                     }
                 }
             default:
                 HStack {
-                    Text(musicData.elapsedTime?.minuteSecondFormat() ?? "0:00")
+                    Text(mediaController?.musicData.elapsedTime.minuteSecondFormat() ?? "0:00")
                         .foregroundStyle(.secondary)
                     ZStack {
                         Capsule()
@@ -59,7 +59,7 @@ struct NowPlayingNotchExpandedView: View {
                             .clipShape(.capsule)
                             .foregroundStyle(.secondary)
                     }
-                    Text("-" + (musicData.duration ?? 0 - (musicData.elapsedTime ?? 0)).minuteSecondFormat())
+                    Text("-" + (mediaController?.musicData.duration ?? 0 - (mediaController?.musicData.elapsedTime ?? 0)).minuteSecondFormat())
                         .foregroundStyle(.secondary)
                 }
             }
@@ -73,24 +73,30 @@ struct NowPlayingNotchExpandedView: View {
                 Spacer()
                 
                 Button("Rewind", systemImage: "backward.fill") {
-                    sendMediaCommand(.previousTrack)
+                    Task {
+                        await mediaController?.previousTrack()
+                    }
                 }
                 .font(.title)
                 .buttonStyle(.borderless)
                 .labelStyle(.iconOnly)
                 
                 Spacer()
-                switch musicData.playing {
+                switch mediaController?.musicData.playing {
                 case true:
                     Button("Pause", systemImage: "pause.fill") {
-                        sendMediaCommand(.playPause)
+                        Task {
+                            await mediaController?.playPause()
+                        }
                     }
                     .font(.largeTitle)
                     .buttonStyle(.borderless)
                     .labelStyle(.iconOnly)
                 default:
                     Button("Play", systemImage: "play.fill") {
-                        sendMediaCommand(.playPause)
+                        Task {
+                            await mediaController?.playPause()
+                        }
                     }
                     .font(.largeTitle)
                     .buttonStyle(.borderless)
@@ -100,7 +106,9 @@ struct NowPlayingNotchExpandedView: View {
                 Spacer()
                 
                 Button("Forward", systemImage: "forward.fill") {
-                    sendMediaCommand(.nextTrack)
+                    Task {
+                        await mediaController?.nextTrack()
+                    }
                 }
                 .font(.title)
                 .buttonStyle(.borderless)
@@ -123,7 +131,7 @@ struct NowPlayingNotchExpandedView: View {
 }
 
 struct NowPlayingNotchCompactLeadingView: View {
-    var musicData: MusicData
+    private var mediaController = MediaController.controller
     var body: some View {
         HStack {
             Image(.sour)
@@ -132,14 +140,14 @@ struct NowPlayingNotchCompactLeadingView: View {
 }
 
 struct NowPlayingNotchCompactTrailingView: View {
-    var musicData: MusicData
+    private var mediaController = MediaController.controller
     var body: some View {
         HStack {
-            Text(musicData.title ?? "")
+            Text(mediaController?.musicData.title ?? "")
         }
     }
 }
 
 #Preview {
-    NowPlayingNotchExpandedView(musicData: musicData)
+    NowPlayingNotchExpandedView()
 }

@@ -9,20 +9,27 @@ import DynamicNotchKit
 import SwiftUI
 
 struct MediaSettingsView: View {
+    private var mediaController = MediaController.controller
     var body: some View {
         List {
             Button("Start") {}
             Button("Play Pause") {
-                sendMediaCommand(.playPause)
+                Task {
+                    await mediaController?.playPause()
+                }
             }
             Button("Play") {
-                sendMediaCommand(.play)
+                Task {
+                    await mediaController?.play()
+                }
             }
             Button("Pause") {
-                sendMediaCommand(.pause)
+                Task {
+                    await mediaController?.pause()
+                }
             }
             Section {
-                NowPlayingNotchExpandedView(musicData: musicData)
+                NowPlayingNotchExpandedView()
             }
             Section {
                 Button("expand") {
