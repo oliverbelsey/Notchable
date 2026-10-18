@@ -8,8 +8,35 @@
 import Combine
 import Foundation
 
+@Observable
 class NowPlayingController: MediaControllerProtocol {
-    @Published var musicData = MusicData()
+    var musicData = MusicData()
+    private var streamer: MediaStreamer
+    
+    init() {
+        self.streamer = MediaStreamer()
+        streamer.onTrackUpdate = { payload in
+            if let title = payload.title {
+                self.musicData.title = title
+            }
+            if let artist = payload.artist {
+                self.musicData.artist = artist
+            }
+            if let timestamp = payload.timestamp {
+                self.musicData.timestamp = ISO8601DateFormatter().date(from: timestamp)!
+            }
+            if let elapsedTime = payload.elapsedTime {
+                self.musicData.elapsedTime = Double(elapsedTime)
+            }
+            if let playing = payload.playing {
+                self.musicData.playing = playing
+            }
+            if let duration = payload.duration {
+                self.musicData.duration = Double(duration)
+            }
+        }
+        streamer.startStreaming()
+    }
 
     func play() async {
         sendCommand("send 0")
@@ -47,7 +74,6 @@ class NowPlayingController: MediaControllerProtocol {
         sendCommand("send 13")
     }
     
-    init() {}
     
     private func sendCommand(_ command: String) {
         guard
@@ -78,79 +104,106 @@ class NowPlayingController: MediaControllerProtocol {
         }
     }
     
-//    private class MediaStreamer {
-//        private var process: Process?
-//        private var outputPipe: Pipe?
-//        
-//        var onTrackUpdate: ((MediaPayload) -> Void)?
-//        
-//        func startStreaming() {
-//            guard
-//                let scriptURL = Bundle.main.url(forResource: "mediaremote-adapter", withExtension: "pl"),
-//                let frameworkPath = Bundle.main.privateFrameworksPath?.appending("/MediaRemoteAdapter.framework")
-//            else {
-//                print("Cannot find mediaremote-adapter resources")
-//                return
-//            }
-//            
-//            let process = Process()
-//            let pipe = Pipe()
-//            
-//            process.executableURL = URL(fileURLWithPath: "/usr/bin/perl")
-//            process.arguments = [scriptURL.path, frameworkPath, "stream", "--no-artwork"]
-//            process.standardOutput = pipe
-//            
-//            self.process = process
-//            outputPipe = pipe
-//            
-//            let fileHandle = pipe.fileHandleForReading
-//            fileHandle.waitForDataInBackgroundAndNotify()
-//            
-//            NotificationCenter.default.addObserver(
-//                self,
-//                selector: #selector(handleDataAvailable(_:)),
-//                name: NSNotification.Name.NSFileHandleDataAvailable,
-//                object: fileHandle
-//            )
-//            
-//            do {
-//                try process.run()
-//                print("Media Remote stream started")
-//            } catch {
-//                print("Failed to start Media Remote stream: \(error)")
-//            }
-//        }
-//        
-//        @objc private func handleDataAvailable(_ notification: Notification) {
-//            guard
-//                let fileHandle = notification.object as? FileHandle else { return }
-//            let data = fileHandle.availableData
-//            
-//            if data.isEmpty {
-//                print("Stream ended")
-//                return
-//            }
-//            
-//            if let outputString = String(data: data, encoding: .utf8) {
-//                let lines = outputString.components(separatedBy: .newlines)
-//                for line in lines {
-//                    if !line.isEmpty {
-//                        parseJSONLine(line)
-//                    }
-//                }
-//            }
-//            
-//            fileHandle.waitForDataInBackgroundAndNotify()
-//        }
-//        
-//        private func parseJSONLine(_ jsonString: String) {
-//            print(jsonString)
-//                    }
-//        
-//        func stopStreaming() {
-//            process?.terminate()
-//            process = nil
-//            outputPipe = nil
-//        }
-//    }
+    private class MediaStreamer {
+        struct MediaPayload: Codable {
+            var title: String?
+            var artist: String?
+            var timestamp: String?
+            var elapsedTime: Float?
+            var playing: Bool?
+            var duration: Float?
+            var artwork: String?
+        }
+        
+        struct StreamEvent: Codable {
+            var type: String
+            var diff: Bool
+            var payload: MediaPayload
+        }
+        
+        private var process: Process?
+        private var outputPipe: Pipe?
+        
+        var onTrackUpdate: ((MediaPayload) -> Void)?
+        
+        func startStreaming() {
+            guard
+                let scriptURL = Bundle.main.url(forResource: "mediaremote-adapter", withExtension: "pl"),
+                let frameworkPath = Bundle.main.privateFrameworksPath?.appending("/MediaRemoteAdapter.framework")
+            else {
+                print("Cannot find mediaremote-adapter resources")
+                return
+            }
+            
+            let process = Process()
+            let pipe = Pipe()
+            
+            process.executableURL = URL(fileURLWithPath: "/usr/bin/perl")
+            process.arguments = [scriptURL.path, frameworkPath, "stream", "--no-artwork"]
+            process.standardOutput = pipe
+            
+            self.process = process
+            outputPipe = pipe
+            
+            let fileHandle = pipe.fileHandleForReading
+            fileHandle.waitForDataInBackgroundAndNotify()
+            
+            NotificationCenter.default.addObserver(
+                self,
+                selector: #selector(handleDataAvailable(_:)),
+                name: NSNotification.Name.NSFileHandleDataAvailable,
+                object: fileHandle
+            )
+            
+            do {
+                try process.run()
+                print("Media Remote stream started")
+            } catch {
+                print("Failed to start Media Remote stream: \(error)")
+            }
+        }
+        
+        @objc private func handleDataAvailable(_ notification: Notification) {
+            guard
+                let fileHandle = notification.object as? FileHandle else { return }
+            let data = fileHandle.availableData
+            
+            if data.isEmpty {
+                print("Stream ended")
+                return
+            }
+            
+            if let outputString = String(data: data, encoding: .utf8) {
+                let lines = outputString.components(separatedBy: .newlines)
+                for line in lines {
+                    if !line.isEmpty {
+                        parseJSONLine(line)
+                    }
+                }
+            }
+            
+            fileHandle.waitForDataInBackgroundAndNotify()
+        }
+        
+        private func parseJSONLine(_ jsonString: String) {
+            print(jsonString)
+            guard let data = jsonString.data(using: .utf8) else { return }
+            
+            do {
+                let event = try JSONDecoder().decode(StreamEvent.self, from: data)
+                
+                DispatchQueue.main.async {
+                    self.onTrackUpdate?(event.payload)
+                }
+            } catch {
+                print("Skipping non-JSON or malformed line: \(error)")
+            }
+        }
+        
+        func stopStreaming() {
+            process?.terminate()
+            process = nil
+            outputPipe = nil
+        }
+    }
 }
