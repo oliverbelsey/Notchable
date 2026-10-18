@@ -14,7 +14,7 @@ class NowPlayingController: MediaControllerProtocol {
     private var streamer: MediaStreamer
     
     init() {
-        self.streamer = MediaStreamer()
+        streamer = MediaStreamer()
         streamer.onTrackUpdate = { payload in
             if let title = payload.title {
                 self.musicData.title = title
@@ -33,6 +33,11 @@ class NowPlayingController: MediaControllerProtocol {
             }
             if let duration = payload.duration {
                 self.musicData.duration = Double(duration)
+            }
+            if let artworkString = payload.artworkData,
+               let artworkData = Data(base64Encoded: artworkString)
+            {
+                self.musicData.artwork = artworkData
             }
         }
         streamer.startStreaming()
@@ -74,7 +79,6 @@ class NowPlayingController: MediaControllerProtocol {
         sendCommand("send 13")
     }
     
-    
     private func sendCommand(_ command: String) {
         guard
             let scriptURL = Bundle.main.url(forResource: "mediaremote-adapter", withExtension: "pl"),
@@ -112,7 +116,7 @@ class NowPlayingController: MediaControllerProtocol {
             var elapsedTime: Float?
             var playing: Bool?
             var duration: Float?
-            var artwork: String?
+            var artworkData: String?
         }
         
         struct StreamEvent: Codable {
@@ -123,6 +127,7 @@ class NowPlayingController: MediaControllerProtocol {
         
         private var process: Process?
         private var outputPipe: Pipe?
+        private var buffer = Data()
         
         var onTrackUpdate: ((MediaPayload) -> Void)?
         
@@ -139,7 +144,7 @@ class NowPlayingController: MediaControllerProtocol {
             let pipe = Pipe()
             
             process.executableURL = URL(fileURLWithPath: "/usr/bin/perl")
-            process.arguments = [scriptURL.path, frameworkPath, "stream", "--no-artwork"]
+            process.arguments = [scriptURL.path, frameworkPath, "stream"]
             process.standardOutput = pipe
             
             self.process = process
@@ -173,24 +178,23 @@ class NowPlayingController: MediaControllerProtocol {
                 return
             }
             
-            if let outputString = String(data: data, encoding: .utf8) {
-                let lines = outputString.components(separatedBy: .newlines)
-                for line in lines {
-                    if !line.isEmpty {
-                        parseJSONLine(line)
-                    }
+            buffer.append(data)
+            
+            let newLine = UInt8(ascii: "\n")
+            while let index = buffer.firstIndex(of: newLine) {
+                let lineData = buffer.subdata(in: buffer.startIndex ..< index)
+                buffer.removeSubrange(buffer.startIndex ... index)
+                if !lineData.isEmpty {
+                    parseJSONLine(lineData)
                 }
             }
             
             fileHandle.waitForDataInBackgroundAndNotify()
         }
         
-        private func parseJSONLine(_ jsonString: String) {
-            print(jsonString)
-            guard let data = jsonString.data(using: .utf8) else { return }
-            
+        private func parseJSONLine(_ lineData: Data) {
             do {
-                let event = try JSONDecoder().decode(StreamEvent.self, from: data)
+                let event = try JSONDecoder().decode(StreamEvent.self, from: lineData)
                 
                 DispatchQueue.main.async {
                     self.onTrackUpdate?(event.payload)

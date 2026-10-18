@@ -15,4 +15,5 @@ struct MusicData {
     var playing: Bool = false
     var duration: TimeInterval = 229
     var shuffling: Bool = true
+    var artwork: Data?
 }

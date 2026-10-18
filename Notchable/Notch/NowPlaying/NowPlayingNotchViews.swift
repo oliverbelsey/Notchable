@@ -12,7 +12,7 @@ struct NowPlayingNotchExpandedView: View {
     var body: some View {
         VStack {
             HStack {
-                Image(.sour)
+                Image(imageData: mediaController?.musicData.artwork ?? Data())
                     .resizable()
                     .frame(width: 60, height: 60)
                     .clipShape(.rect(cornerRadius: 12))
