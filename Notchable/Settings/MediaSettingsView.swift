@@ -22,22 +22,22 @@ struct MediaSettingsView: View {
                 sendMediaCommand(.pause)
             }
             Section {
-                NowPlayingNotchExpandedView(musicData: musicData)
+                NowPlayingNotchExpandedView(musicData: MusicData())
             }
             Section {
                 Button("expand") {
                     Task {
-                        await NowPlayingNotch.expand()
+                        await Notches.nowPlaying.expand()
                     }
                 }
                 Button("compact") {
                     Task {
-                        await NowPlayingNotch.compact()
+                        await Notches.nowPlaying.compact()
                     }
                 }
                 Button("hide") {
                     Task {
-                        await NowPlayingNotch.hide()
+                        await Notches.nowPlaying.hide()
                     }
                 }
             }

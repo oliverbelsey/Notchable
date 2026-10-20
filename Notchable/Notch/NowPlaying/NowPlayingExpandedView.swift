@@ -1,12 +1,12 @@
 //
-//  NowPlayingNotchViews.swift
+//  NowPlayingExpandedView.swift
 //  Notchable
 //
-//  Created by Oliver Belsey on 27/06/2026.
+//  Created by Oliver Belsey on 20/10/26.
 //
 
 import SwiftUI
-    
+
 struct NowPlayingNotchExpandedView: View {
     var musicData: MusicData
     var body: some View {
@@ -120,26 +120,4 @@ struct NowPlayingNotchExpandedView: View {
         .padding(.vertical, 10)
         .frame(width: 250, height: 125)
     }
-}
-
-struct NowPlayingNotchCompactLeadingView: View {
-    var musicData: MusicData
-    var body: some View {
-        HStack {
-            Image(.sour)
-        }
-    }
-}
-
-struct NowPlayingNotchCompactTrailingView: View {
-    var musicData: MusicData
-    var body: some View {
-        HStack {
-            Text(musicData.title ?? "")
-        }
-    }
-}
-
-#Preview {
-    NowPlayingNotchExpandedView(musicData: musicData)
 }
