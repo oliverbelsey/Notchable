@@ -8,14 +8,12 @@
 import DynamicNotchKit
 import SwiftUI
 
-private let musicData = MusicData()
-
 enum Notches {
     static let nowPlaying = DynamicNotch {
-        NowPlayingNotchExpandedView(musicData: musicData)
+        NowPlayingNotchExpandedView()
     } compactLeading: {
-        NowPlayingNotchCompactLeadingView(musicData: musicData)
+        NowPlayingNotchCompactLeadingView()
     } compactTrailing: {
-        NowPlayingNotchCompactTrailingView(musicData: musicData)
+        NowPlayingNotchCompactTrailingView()
     }
 }

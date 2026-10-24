@@ -8,19 +8,19 @@
 import SwiftUI
 
 struct NowPlayingNotchCompactLeadingView: View {
-    var musicData: MusicData
+    private var mediaController = MediaController.controller
     var body: some View {
         HStack {
-            Image(.sour)
+            Image(imageData: mediaController?.musicData.artwork ?? Data())
         }
     }
 }
 
 struct NowPlayingNotchCompactTrailingView: View {
-    var musicData: MusicData
+    private var mediaController = MediaController.controller
     var body: some View {
         HStack {
-            Text(musicData.title ?? "")
+            Text(MediaController.controller?.musicData.title ?? "")
         }
     }
 }
