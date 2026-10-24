@@ -22,8 +22,10 @@ class NowPlayingController: MediaControllerProtocol {
             if let artist = payload.artist {
                 self.musicData.artist = artist
             }
-            if let timestamp = payload.timestamp {
-                self.musicData.timestamp = ISO8601DateFormatter().date(from: timestamp)!
+            if let timestamp = payload.timestamp,
+               let parsedTimestamp = ISO8601DateFormatter().date(from: timestamp)
+            {
+                self.musicData.timestamp = parsedTimestamp
             }
             if let elapsedTime = payload.elapsedTime {
                 self.musicData.elapsedTime = Double(elapsedTime)
